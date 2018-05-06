@@ -1,0 +1,131 @@
+析构函数主要作用就是释放资源，避免内存泄漏
+
+对阶是指将两个进行运算的浮点数的阶码对齐的操作。
+对阶的具体方法是：首先求出两浮点数阶码的差，即⊿E＝Ex-Ey，将小阶码加上⊿E，使之与大阶码相等，同时将小阶码对应的浮点数的尾数右移相应位数，以保证该浮点数的值不变。
+
+一个算法应该具有以下五个重要的特征： 
+1、有穷性（Finiteness） 
+算法的有穷性是指算法必须能在执行有限个步骤之后终止 
+2、确切性(Definiteness) 
+算法的每一步骤必须有确切的定义； 
+3、输入项(Input) 
+一个算法有0个或多个输入,以刻画运算对象的初始情况,所谓0个输入是指算法本身定出了初始条件； 
+4、输出项(Output) 
+一个算法有一个或多个输出,以反映对输入数据加工后的结果.没有输出的算法是毫无意义的； 
+5、可行性(Effectiveness) 
+算法中执行的任何计算步都是可以被分解为基本的可执行的操作步,即每个计算步都可以在有限时间内完成.（也称之为有效性）
+
+---------------------------------------------------------------------------------------------------------------------------------
+/*
+问题：有 n 个学生站成一排，每个学生有一个能力值，牛牛想从这 n 个学生中按照顺序选取 k 名学生，
+要求相邻两个学生的位置编号的差不超过 d，使得这 k 个学生的能力值的乘积最大，你能返回最大的乘积吗？
+
+每个输入包含 1 个测试用例。每个测试数据的第一行包含一个整数 n (1 <= n <= 50)，表示学生的个数，
+接下来的一行，包含 n 个整数，按顺序表示每个学生的能力值 ai（-50 <= ai <= 50）。
+接下来的一行包含两个整数，k 和 d (1 <= k <= 10, 1 <= d <= 50)。
+
+
+因为有正有负，负负得正，所以要维护两个dp数组，一个存储最大，一个存储最小。
+定义fm[k][i]表示当选中了k个学生，并且以第i个学生为结尾，所产生的最大乘积；
+        fn[k][i]表示 当选中了k个学生，并且以第i个学生为结尾，所产生的最小乘积；
+那么fm[k+1][i+1]=max(fm[k][i]*stu[i+1],fn[k][i]*stu[i+1])，
+        即当选中了k个学生后，再选择第i+1编号学生，所产生的最大乘积；
+        然而，并不能保证上一次选择的就是第i个学生，所以要遍历子数组fm[k]，
+        令j从i到1，并且j与i+1之间小于间隔D，遍历fm[k][j]，以及fn[k][j]；
+同理fn[k+1][i+1]=min(fn[k][i]*stu[i+1],fm[k][i]*stu[i+1])。
+最后，遍历一遍fm[K][i]求得最大值（i从1～N）。
+*/
+//第一种
+import java.util.Scanner;
+ 
+public class Main {
+    // 参考 【小刀初试】的算法思想， Java版本，便于理解
+    public static void main(String[] args) {
+        Scanner cin = new Scanner(System.in);
+        while (cin.hasNextInt()) {
+            int n = cin.nextInt();          // n 个学生
+            int[] arr = new int [n+1];
+            for (int i = 1; i <=n ; i++) {
+                arr[i] = cin.nextInt();
+            }
+            int K = cin.nextInt();            // 选出K个
+            int d = cin.nextInt();            // 两个学生的位置编号的差不超过 d
+            long[][] fmax = new long[K+1][n+1]; // 记录最大乘积
+            long[][] fmin = new long[K+1][n+1]; // 记录最小乘积
+            // fmax[k][i]表示 : 当选中了k个学生，并且以第i个学生为结尾，所产生的最大乘积；
+            // fmin[k][i]表示 : 当选中了k个学生，并且以第i个学生为结尾，所产生的最小乘积；
+            //初始化第一行
+            long  res = Integer.MIN_VALUE; // 记得用Long类型，考虑数值范围
+            for (int i = 1; i <=n; i++) {
+                fmax[1][i] = arr[i];
+                fmin[1][i] = arr[i];
+                for (int k = 2; k <=K; k++) {
+                    for (int j = i-1 ; j > 0 &&  i-j<=d ; j--) {
+                        fmax[k][i] = Math.max(fmax[k][i], Math.max(fmax[k-1][j] * arr[i], fmin[k-1][j] * arr[i]));
+                        fmin[k][i] = Math.min(fmin[k][i], Math.min(fmax[k-1][j] * arr[i], fmin[k-1][j] * arr[i]));
+                    }
+                }
+                res = Math.max(res ,fmax[K][i]);
+            }
+            System.out.println(res);
+        }
+    }
+}
+/**************************************************************************************************************************/
+//第二种
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+   
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = null;
+        while((line = br.readLine()) != null){
+            int n = Integer.parseInt(line.trim());
+            line = br.readLine();
+            int[] nums = new int[n];
+            String[] s = line.trim().split(" ");
+            for(int i=0;i<n;i++){
+                nums[i] = Integer.parseInt(s[i]);  //a[i]表示学生的能力值
+            }
+            line = br.readLine();
+            String[] s1 = line.trim().split(" ");
+            int k = Integer.parseInt(s1[0]);  //选取k个学生
+            int d = Integer.parseInt(s1[1]);  //编号之差不超过d
+            long[][] max = new long[k][n];
+            long[][] min = new long[k][n];
+            for(int i=0;i<k;i++){
+                for(int j=0;j<n;j++){
+                    max[i][j] = 1;
+                    min[i][j] = 1;
+                    if(i==0){
+                        min[i][j] = nums[j];
+                        max[i][j] = nums[j];
+                    }
+                }
+            }
+            for(int i=1;i<k;i++){
+                for(int j=0;j<n;j++){
+                    for(int m=1;m<=d;m++){
+                        if(j-m >= 0){
+                            if(nums[j] > 0){
+                                min[i][j] = Math.min(min[i][j], min[i-1][j-m] * nums[j]);
+                                max[i][j] = Math.max(max[i][j], max[i-1][j-m] * nums[j]);
+                            }else{
+                                min[i][j] = Math.min(min[i][j], max[i-1][j-m] * nums[j]);
+                                max[i][j] = Math.max(max[i][j], min[i-1][j-m] * nums[j]);
+                            }
+                        }
+                    }
+                }
+            }
+            long res = 0;
+            for(int i=0;i<n;i++){
+                if(i>=k-1){
+                    res = Math.max(res, max[k-1][i]);
+                }
+            }
+            System.out.println(res);
+        }
+    }
+}
