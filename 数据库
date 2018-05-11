@@ -296,6 +296,24 @@ function sqlencode(str) str=replace(str,"';","';';") str=replace(str,"[","[[]") 
 
 并发操作带来的数据不一致性包括丢失修改、不可重复读、读“脏”数据
 
+数据库系统的特点：
+一：数据结构化
+二：数据的共享性高，冗余度低，易扩展
+三：数据独立性高
+四：数据由DBMS统一管理和控制
+
+sql执行顺序:
+from --> where --> group by --> having --> select --> order by -->limit  
+
+
+
+
+
+
+
+
+
+
 
 
 

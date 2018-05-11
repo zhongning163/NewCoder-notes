@@ -1,0 +1,3 @@
+有时为了避免某些未识别的异常抛给更高的上层应用，在某些接口实现中我们通常需要捕获编译运行期所有的异常， catch Exception类的实例才能达到目的
+因为error是系统出错，catch是无法处理的，难以修复的，RuntimeException不需要程序员进行捕获处理，
+error和exception都是throwable的子类，我们只需要对exception的实例进行捕获即可
