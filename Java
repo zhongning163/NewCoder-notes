@@ -8,3 +8,52 @@ Java中，数据类型分为基本数据类型（或叫做原生类、内置类�
 
 Java 的屏幕坐标是以像素为单位，容器的左上角被确定为坐标的起点。
 
+byte能表示的范围[-128,127]
+
+运行异常，可以通过java虚拟机来自行处理。非运行异常，我们应该捕获或者抛出
+
+以非new形式创建一个字符串a首先会字符串池查找有没有相同的字符串，如果有，就把相同字符串的首地址赋给a
+==是比较地址值是否相等，.equals()方法是比较值是否相等
+
+Spring 支持 7 种事务传播行为：
+PROPAGATION_REQUIRED 如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。这是最常见的选择。
+PROPAGATION_SUPPORTS 支持当前事务，如果当前没有事务，就以非事务方式执行。
+PROPAGATION_MANDATORY 使用当前的事务，如果当前没有事务，就抛出异常。
+PROPAGATION_REQUIRES_NEW 新建事务，如果当前存在事务，把当前事务挂起。
+PROPAGATION_NOT_SUPPORTED 以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
+PROPAGATION_NEVER 以非事务方式执行，如果当前存在事务，则抛出异常。
+PROPAGATION_NESTED 如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与 PROPAGATION_REQUIRED 类似的操作。
+
+
+int i = 5;
+int j = 10;
+System.out.println(i + ~j);
+公式-n=~n+1可推出~n=-n-1，所以~10=-11再加5结果为-6
+
+JSP内置对象有：
+1.request对象
+     客户端的请求信息被封装在request对象中，通过它才能了解到客户的需求，然后做出响应。它是HttpServletRequest类的实例。
+2.response对象
+     response对象包含了响应客户请求的有关信息，但在JSP中很少直接用到它。它是HttpServletResponse类的实例。
+3.session对象
+     session对象指的是客户端与服务器的一次会话，从客户连到服务器的一个WebApplication开始，直到客户端与服务器断开连接为止。它是HttpSession类的实例.
+4.out对象
+     out对象是JspWriter类的实例,是向客户端输出内容常用的对象
+5.page对象
+     page对象就是指向当前JSP页面本身，有点象类中的this指针，它是java.lang.Object类的实例
+6.application对象
+     application对象实现了用户间数据的共享，可存放全局变量。它开始于服务器的启动，直到服务器的关闭，在此期间，此对象将一直存在；这样在用户的前后连接或不同用户之间的连接中，可以对此对象的同一属性进行操作；在任何地方对此对象属性的操作，都将影响到其他用户对此的访问。服务器的启动和关闭决定了application对象的生命。它是ServletContext类的实例。
+7.exception对象
+   exception对象是一个例外对象，当一个页面在运行过程中发生了例外，就产生这个对象。如果一个JSP页面要应用此对象，就必须把isErrorPage设为true，否则无法编译。他实际上是java.lang.Throwable的对象
+8.pageContext对象
+pageContext对象提供了对JSP页面内所有的对象及名字空间的访问，也就是说他可以访问到本页所在的SESSION，也可以取本页面所在的application的某一属性值，他相当于页面中所有功能的集大成者，它的本 类名也叫pageContext。
+9.config对象
+config对象是在一个Servlet初始化时，JSP引擎向它传递信息用的，此信息包括Servlet初始化时所要用到的参数（通过属性名和属性值构成）以及服务器的有关信息（通过传递一个ServletContext对象）
+
+方法是可以和类名同名的，和构造方法唯一的区别就是，构造方法没有返回值
+
+Exception和Error都是Throwable的子类： 
+1.Exception（异常） :是程序本身可以处理的异常。 
+2.Error（错误）: 是程序无法处理的错误。这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，一般不需要程序处理。
+3.检查异常（编译器要求必须处置的异常） ：  除了Error，RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。
+4.非检查异常(编译器不要求处置的异常): 包括运行时异常（RuntimeException与其子类）和错误（Error）
