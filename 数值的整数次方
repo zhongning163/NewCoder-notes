@@ -1,0 +1,13 @@
+public class Solution {
+    public double Power(double base, int exponent) {
+        double temp=1;
+        for(int i=1;i<=Math.abs(exponent);i++)
+        {
+            if(exponent>=0)
+                temp=temp*base;
+            else
+                temp=(1.0/base)*temp;
+        }
+        return temp;
+  }
+}
