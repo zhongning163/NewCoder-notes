@@ -58,7 +58,7 @@ Exception和Error都是Throwable的子类：
 3.检查异常（编译器要求必须处置的异常） ：  除了Error，RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。
 4.非检查异常(编译器不要求处置的异常): 包括运行时异常（RuntimeException与其子类）和错误（Error）
 
-1.抽象方法只能定义在抽象类中，抽象方法和抽象类必须由abstract修饰，abstract关键字只能描述类和方法，不能描述变量。
+1.抽象方法只能定义在抽象类中，抽象方法和抽象类必须由abstract修饰，abstract关键字只能描述类和方法，不能描述变量，不修饰字段（属性）。
 抽象方法只定义方法声明，不定义方法实现。
 抽象类不可以被实例化（创建对象），只有通过子类继承抽象类并覆盖抽象类中的所有抽象方法后，该子类才可以被实例化，否则该子类还是一个抽象类。
 抽象类中有构造函数用于给子类对象进行初始化，同时抽象类中可以含有非抽象方法。
@@ -84,7 +84,7 @@ abstract关键字不可以与final，private,static关键字共存，因为被fi
 析构函数(destructor) 与构造函数相反，当对象结束其 生命周期时（例如对象所在的函数已调用完毕），
 系统自动执行析构函数。析构函数往往用来做“清理善后” 的工作（例如在建立对象时用new开辟了一片内存空间，应在退出前在析构函数中用delete释放）。
 
-Stack是栈， queue是对列；
+Stack是栈， queue是队列；
 栈是后进先出，对列是先进先出；
 栈是出入从同一个位置；
 对列是入从结构的一端进入，从另一端出队；
@@ -94,5 +94,101 @@ Stack是栈， queue是对列；
 final类是不能继承的
 
 被static修饰的变量称为静态变量，静态变量属于整个类，而局部变量属于方法，只在该方法内有效，所以static不能修饰局部变量
+
+接口方法默认是public abstract的，且实现该接口的类中对应的方法的可见性不能小于接口方法的可见性，因此也只能是public的。
+
+抽象方法没有方法体，也不用大括号。
+
+抽象方法用“;”结束
+
+java.io.Reader是一个读取字符流的抽象类，通过继承Reader类，可以很方便的读取字符流，
+     比如，我们可以将一个字符串读取为一串串（字符）流，还可以读取一个文件里的内容为一串串的流。
+Java(1.6.x)里提供了几种Reader的直接继承类，具体的有：
+BufferedReader, CharArrayReader, FileReader, InputStreamReader, PipedReader, StringReader等，
+子类须实现的方法只有 read(char[], int, int) 和 close()
+
+HashMap不能保证元素的顺序,HashMap能够将键设为null，也可以将值设为null，
+与之对应的是Hashtable,(注意大小写：不是HashTable)，
+Hashtable不能将键和值设为null，否则运行时会报空指针异常错误；
+HashMap线程不安全，Hashtable线程安全
+
+1.Statement、PreparedStatement和CallableStatement都是接口(interface)。  
+2.Statement继承自Wrapper、PreparedStatement继承自Statement、CallableStatement继承自PreparedStatement。  
+3.  
+Statement接口提供了执行语句和获取结果的基本方法；  
+PreparedStatement接口添加了处理 IN 参数的方法；  
+CallableStatement接口添加了处理 OUT 参数的方法。  
+4.  
+a.Statement:  
+普通的不带参的查询SQL；支持批量更新,批量删除;  
+b.PreparedStatement:  
+可变参数的SQL,编译一次,执行多次,效率高;  
+安全性好，有效防止Sql注入等问题;  
+支持批量更新,批量删除;  
+c.CallableStatement:  
+继承自PreparedStatement,支持带参数的SQL操作;  
+支持调用存储过程,提供了对输出和输入/输出参数(INOUT)的支持;  
+
+Statement每次执行sql语句，数据库都要执行sql语句的编译 ，  
+最好用于仅执行一次查询并返回结果的情形，效率高于PreparedStatement。  
+
+PreparedStatement是预编译的，使用PreparedStatement有几个好处  
+1. 在执行可变参数的一条SQL时，PreparedStatement比Statement的效率高，因为DBMS预编译一条SQL当然会比多次编译一条SQL的效率要高。  
+2. 安全性好，有效防止Sql注入等问题。  
+3.  对于多次重复执行的语句，使用PreparedStament效率会更高一点，并且在这种情况下也比较适合使用batch；  
+4.  代码的可读性和可维护性。
+
+类的加载包括：加载，验证，准备，解析，初始化。
+生成java.lang.Class对象是在加载时进行的。生成Class对象作为方法区这个类的各种数据的访问入口
+
+对于JVM内存配置参数：
+-Xmx10240m -Xms10240m -Xmn5120m -XXSurvivorRatio=3
+-Xmx：最大堆大小
+-Xms：初始堆大小
+-Xmn:年轻代大小
+-XXSurvivorRatio：年轻代中Eden区与Survivor区的大小比值
+年轻代5120m， Eden：Survivor=3，Survivor区大小=1024m（Survivor区有两个，即将年轻代分为5份，每个Survivor区占一份），总大小为2048m。
+-Xms初始堆大小即最小内存值为10240m
+
+简单地说，字符流是字节流根据字节流所要求的编码集解析获得的
+可以理解为字符流=字节流+编码集
+和字符流有关的类都拥有操作编码集(unicode)的能力
+
+字节流：
+InputStream   
+|-- FileInputStream (基本文件流）   
+|-- BufferedInputStream   
+|-- DataInputStream   
+|-- ObjectInputStream
+字符流
+Reader 
+|-- InputStreamReader (byte->char 桥梁） 
+|-- BufferedReader (常用） 
+Writer 
+|-- OutputStreamWriter (char->byte 桥梁） 
+|-- BufferedWriter 
+|-- PrintWriter （常用
+
+java程序的入口必须是static类型的，接口中不允许有static类型的方法
+interface中的方法默认为public abstract 的 ，变量默认为public static final
+
+1. 只看尖括号里边的！！明确点和范围两个概念
+2. 如果尖括号里的是一个类，那么尖括号里的就是一个点，比如List<A>,List<B>,List<Object>
+3. 如果尖括号里面带有问号，那么代表一个范围，<? extends A> 代表小于等于A的范围，<? super A>代表大于等于A的范围，<?>代表全部范围
+4. 尖括号里的所有点之间互相赋值都是错，除非是俩相同的点
+5. 尖括号小范围赋值给大范围，对，大范围赋值给小范围，错。如果某点包含在某个范围里，那么可以赋值，否则，不能赋值
+6. List<?>和List 是相等的，都代表最大范围
+----------------------------------------------------------------------------------
+7.补充：List既是点也是范围，当表示范围时，表示最大范围
+
+jvm中垃圾回收分为scanvenge gc和full GC，
+
+
+
+
+
+
+
+
 
 
