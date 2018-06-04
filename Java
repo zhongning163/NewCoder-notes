@@ -257,8 +257,9 @@ ThreadLocal类为每一个线程都维护了自己独有的变量拷贝。每个
 
 ThreadLocal中定义了一个哈希表用于为每个线程都提供一个变量的副本
 
-
-
+能被Appletviewer成功运行的java class文件没有main()方法
+ Appletviewer.exe 就是用来解释执行java applet应用程序的,简单理解就是没有main函数的继承applet类的java类
+一个Java类满足：1、继承applet；2、这个类没有main函数 。这个类就靠Appletviewer.exe 解释执行。jar选项中有Java.exe来执行含有main函数的Java类
 
 
 
