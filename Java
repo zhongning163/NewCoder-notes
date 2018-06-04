@@ -204,7 +204,7 @@ this和super的区别
      6）this()和super()都指的是对象，所以，均不可以在static环境中使用。包括：static变量,static方法，static语句块。
      7）从本质上讲，this是一个指向本对象的指针, 然而super是一个Java关键字
 
-
+覆盖又叫覆写，重写。     与重载是两个概念
 
 
 
