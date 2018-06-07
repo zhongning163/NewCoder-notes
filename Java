@@ -314,7 +314,7 @@ start()方法用来启动线程对象，使其进入就绪状态
 sleep()方法用来使线程进入睡眠状态
 suspend()方法用来使线程挂起，要通过resume()方法使其重新启动
 
-
+finally一定会在return之前执行，但是如果finally使用了return或者throw语句，将会使trycatch中的return或者throw失效
 
 
 
