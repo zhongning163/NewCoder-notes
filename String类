@@ -1,0 +1,12 @@
+下面程序的输出是:()
+
+String x="fmn";
+x.toUpperCase();
+String y=x.replace('f','F');
+y=y+"wxy";
+System.out.println(y);
+
+String x="fmn";  “fmn”是在常量池里的不可变对象。
+x.toUpperCase();   在堆中new一个"FMN"对象，但无任何引用指向它。
+String y=x.replace('f','F'); 在堆中 new一个"Fmn"对象，y指向它。
+y=y+"wxy"; 在堆中 重新new一个"Fmnwxy"对象， 修改y指向，现在y指向它。
