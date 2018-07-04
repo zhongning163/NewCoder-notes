@@ -28,8 +28,8 @@ public class Solution {
             return sb.toString();
         }
         sb.append(root.val + ",");
-        sb.append(Serialize(root.left));
-        sb.append(Serialize(root.right));
+        sb.append(Serialize(root.left));    //递归
+        sb.append(Serialize(root.right));
         return sb.toString();
   }
     TreeNode Deserialize(String str) {
