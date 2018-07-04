@@ -42,9 +42,9 @@ public class Solution {
         TreeNode node = null;
         if(!strr[index].equals("#")){
             node = new TreeNode(Integer.valueOf(strr[index]));
-            node.left = Deserialize(str);
-            node.right = Deserialize(str);
-        }
+            node.left = Deserialize(str);           //当为左子树的所有左孩子赋值后，才会到下一句给右孩子赋值
+          node.right = Deserialize(str);             //当给右孩子赋值完后，才会往上一层树的右子树走
+       }
         return node;
   }
 }
