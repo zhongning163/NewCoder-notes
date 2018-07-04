@@ -28,7 +28,7 @@ public class Solution {
             return sb.toString();
         }
         sb.append(root.val + ",");
-        sb.append(Serialize(root.left));    //递归
+        sb.append(Serialize(root.left));    //递归,前序遍历是根-左-右
         sb.append(Serialize(root.right));
         return sb.toString();
   }
@@ -38,8 +38,8 @@ public class Solution {
         //if(index >= len){
         //    return null;
        // }
-        String[] strr = str.split(",");
-        TreeNode node = null;
+        String[] strr = str.split(",");                //将字符串用“，”分开
+        TreeNode node = null;
         if(!strr[index].equals("#")){
             node = new TreeNode(Integer.valueOf(strr[index]));
             node.left = Deserialize(str);
